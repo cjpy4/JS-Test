@@ -1,12 +1,15 @@
 //Import a module
-const log = require("./log");
+const Logger = require("./log");
 // Using the os module to retrieve device information
 const os = require("os");
 var totalMemory = os.totalmem;
 var freeMemory = os.freemem;
+function log() {
+  console.log(`Total Memory: ${totalMemory}`);
+  console.log(`Free Memory: ${freeMemory}`);
+}
 console.log(log());
-console.log(`Total Memory: ${totalMemory}`);
-console.log(`Free Memory: ${freeMemory}`);
+
 // Using the file system module to retrieve files
 const fs = require("fs");
 fs.readdir("./", function (err, files) {
@@ -15,10 +18,11 @@ fs.readdir("./", function (err, files) {
 });
 // Create a class with the methods of the events module
 const EventEmitter = require("events");
-const emitter = new EventEmitter();
+// Instantiate the Logger class
+logger = new Logger();
 // Register a listener
-emitter.on("messageLogged", function () {
-  console.log("listenerCalled");
+logger.on("messageLogged", (arg) => {
+  console.log("listenerCalled", arg);
 });
-// Raise an Event
-emitter.emit("messageLogged");
+// calling the raise event function
+logger.log();
